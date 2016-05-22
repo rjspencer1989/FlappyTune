@@ -18,5 +18,4 @@ public class Player : MonoBehaviour {
 		float input = Input.GetAxis ("Jump");
 		rb.AddForce (new Vector2(0.0f, input) * speed);
 	}
-		
 }
