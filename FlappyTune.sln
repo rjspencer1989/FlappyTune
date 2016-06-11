@@ -1,7 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{48CE7BBA-0735-3351-9930-BB7772B7CD54}") = "FlappyTune", "Assembly-CSharp.csproj", "{A5D05B9D-F659-9322-0B87-F319D3AA55B5}"
+EndProject
+Project("{48CE7BBA-0735-3351-9930-BB7772B7CD54}") = "FlappyTune", "Assembly-CSharp-Editor-firstpass.csproj", "{9F86B63B-2A47-B010-3F13-3732A57F7BEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,9 +14,10 @@ Global
 		{A5D05B9D-F659-9322-0B87-F319D3AA55B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5D05B9D-F659-9322-0B87-F319D3AA55B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5D05B9D-F659-9322-0B87-F319D3AA55B5}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
