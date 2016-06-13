@@ -12,12 +12,4 @@ public class MovePipes : MonoBehaviour {
 	void Update () {
 		this.transform.Translate (new Vector3 (-0.05f, 0, 0));
 	}
-
-	void OnTriggerEnter2D(Collider2D other){
-		print (other.tag);
-		if(other.gameObject.CompareTag("Respawn")){
-			print ("respawn");
-			this.gameObject.SetActive(false);
-		}
-	}
 }
