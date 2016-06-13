@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 	private Rigidbody2D rb;
@@ -16,5 +17,12 @@ public class Player : MonoBehaviour {
 	void FixedUpdate () {
 		float input = Input.GetAxis ("Jump");
 		rb.AddForce (new Vector2(0.0f, input) * speed);
+	}
+
+	void OnCollisionEnter2D(Collision2D other){
+		if(other.gameObject.CompareTag("edge") || other.gameObject.CompareTag("pipe")){
+			this.gameObject.SetActive(false);
+			SceneManager.LoadScene ("GameOver");
+		}
 	}
 }
