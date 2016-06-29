@@ -19,8 +19,19 @@ public class Player : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		float input = Input.GetAxis ("Jump");
-		rb.AddForce (new Vector2(0.0f, input) * speed);
+		bool inputVal = false;
+        if(Input.touchSupported){
+            if(Input.touchCount > 0){
+                inputVal = true;
+            }
+        } else{
+            inputVal = Input.GetAxis("Jump") == 1 ? true: false;
+        }
+		
+		if(inputVal) {
+			rb.AddForce (Vector2.up * speed);
+			inputVal = false;
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D other){
