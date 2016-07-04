@@ -15,9 +15,7 @@ public class GeneratePipes : MonoBehaviour
     }
 
     void CreateObstacle(){
-        print(moveFactor);
         float rv = Random.Range(pipeMin, moveFactor);
-        print(rv);
         Vector3 pos = new Vector3(8, rv, 0);
 
         Instantiate(pipes, pos, Quaternion.identity);
