@@ -13,13 +13,25 @@ class MusicParser : MonoBehaviour{
     }
 
     void Start(){
+        String step = ""; 
+        String type = "";
+        int octave = -1;
+        int duration = -1;
         List<Note> notes = new List<Note>();
         XmlDocument music = loadMusic("star");
         XmlNodeList bars = music.DocumentElement.SelectNodes("/score-partwise/part/measure/note");
-        foreach(XmlNode item in bars){
-            XmlNode pitch = item.SelectSingleNode("pitch");
-            Note note = new Note(pitch.SelectSingleNode("step").InnerText, Int32.Parse(pitch.SelectSingleNode("octave").InnerText), item.SelectSingleNode("type").InnerText, Int32.Parse(item.SelectSingleNode("duration").InnerText));
-            print(note.ToString());
+        for(int i = 0; i < bars.Count; i++){
+            XmlNode pitch = bars[i].SelectSingleNode("pitch");
+            if(pitch != null){ // rests don't have a pitch
+                step = pitch.SelectSingleNode("step").InnerText;
+                octave = Int32.Parse(pitch.SelectSingleNode("octave").InnerText);
+            } else if(bars[i].SelectSingleNode("rest") != null){
+                octave = 0;
+                step = "rest";
+            }
+            type = bars[i].SelectSingleNode("type").InnerText;
+            duration = Int32.Parse(bars[i].SelectSingleNode("duration").InnerText);
+            Note note = new Note(step, octave, type, duration);
             notes.Add(note);
         }
     }
