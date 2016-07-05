@@ -13,6 +13,6 @@ class Note{
     }
 
     public override string ToString(){
-        return this.pitch.ToString() + " " + noteType;
+        return this.pitch.ToString() + " " + noteType + " (" + this.duration.ToString() + " beats)";
     }
 }
