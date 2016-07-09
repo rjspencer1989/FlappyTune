@@ -14,4 +14,8 @@ class Note{
     public override string ToString(){
         return this.pitch.ToString() + " " + noteType + " (" + this.duration.ToString() + " beats)";
     }
+
+    public Pitch getPitch(){
+        return this.pitch;
+    }
 }
