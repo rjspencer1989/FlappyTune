@@ -4,7 +4,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System;
 
-class MusicParser : MonoBehaviour{
+class MusicParser{
     private List<Note> notes;
     XmlDocument loadMusic(string name){
         TextAsset asset = Resources.Load(name) as TextAsset;
@@ -13,17 +13,13 @@ class MusicParser : MonoBehaviour{
         return doc;
     }
 
-    public List<Note> getNotes(){
-        return this.notes;
-    }
-
-    void Start(){
+    public List<Note> parseMusic(string songName){
         String step = ""; 
         String type = "";
         int octave = -1;
         int duration = -1;
         notes = new List<Note>();
-        XmlDocument music = loadMusic("star");
+        XmlDocument music = loadMusic(songName);
         XmlNodeList bars = music.DocumentElement.SelectNodes("/score-partwise/part/measure/note");
         for(int i = 0; i < bars.Count; i++){
             XmlNode pitch = bars[i].SelectSingleNode("pitch");
@@ -39,8 +35,6 @@ class MusicParser : MonoBehaviour{
             Note note = new Note(step, octave, type, duration);
             notes.Add(note);
         }
-
-
-
+        return notes;
     }
 }

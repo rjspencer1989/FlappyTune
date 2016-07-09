@@ -1,4 +1,3 @@
-using UnityEngine;
 
 class Note{
     Pitch pitch;
