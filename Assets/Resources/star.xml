@@ -59,7 +59,7 @@
       </score-part>
     </part-list>
   <part id="P1">
-    <measure number="1" width="180.46">
+    <measure number="1" width="180">
       <print>
         <system-layout>
           <system-margins>
@@ -124,7 +124,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="2" width="102.74">
+    <measure number="2" width="102">
       <note default-x="12.00" default-y="-25.00">
         <pitch>
           <step>A</step>
@@ -156,7 +156,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="3" width="117.69">
+    <measure number="3" width="117">
       <note default-x="12.00" default-y="-35.00">
         <pitch>
           <step>F</step>
@@ -198,7 +198,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="4" width="102.74">
+    <measure number="4" width="102">
       <note default-x="12.00" default-y="-45.00">
         <pitch>
           <step>D</step>
@@ -230,7 +230,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="5" width="117.69">
+    <measure number="5" width="117">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -272,7 +272,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="6" width="117.69">
+    <measure number="6" width="117">
       <note default-x="12.00" default-y="-40.00">
         <pitch>
           <step>E</step>
@@ -314,7 +314,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="7" width="117.69">
+    <measure number="7" width="117">
       <note default-x="12.00" default-y="-30.00">
         <pitch>
           <step>G</step>
@@ -356,7 +356,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="8" width="95.11">
+    <measure number="8" width="95">
       <note default-x="12.00" default-y="-40.00">
         <pitch>
           <step>E</step>
@@ -379,7 +379,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="9" width="125.69">
+    <measure number="9" width="125">
       <note default-x="12.00" default-y="-50.00">
         <pitch>
           <step>C</step>
@@ -421,7 +421,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="10" width="382.81">
+    <measure number="10" width="382">
       <print new-system="yes">
         <system-layout>
           <system-margins>
@@ -472,7 +472,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="11" width="354.13">
+    <measure number="11" width="354">
       <note default-x="12.00" default-y="-35.00">
         <pitch>
           <step>F</step>
@@ -514,7 +514,7 @@
         <stem>up</stem>
         </note>
       </measure>
-    <measure number="12" width="340.55">
+    <measure number="12" width="340">
       <note default-x="12.00" default-y="-45.00">
         <pitch>
           <step>D</step>
