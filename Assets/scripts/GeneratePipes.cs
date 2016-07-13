@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using MusicXml.Domain;
 
 public class GeneratePipes : MonoBehaviour
 {
@@ -14,16 +13,9 @@ public class GeneratePipes : MonoBehaviour
         mainCamera = Camera.main;
         string songName = Scenes.getParameter("songName");
         print(songName);
-        Score score = MusicXml.MusicXmlParser.GetScore(songName);
-        Part p = score.Parts[0];
-        foreach (Measure measure in p.Measures)
-        {
-            foreach (MeasureElement me in measure.MeasureElements)
-            {
-                Note n = me.Element as Note;
-                print(n.Pitch.Step+ " " + n.Pitch.Octave);
-            }
-        }
+        TextAsset asset = Resources.Load(songName) as TextAsset;
+        string json = asset.text;
+        Song song = JsonUtility.FromJson<Song>(json);
     }
 
     void CreateObstacle(){
