@@ -1,30 +1,12 @@
 using System;
+
 [Serializable]
 public class Song{
-    public ScorePartwise score_partwise;
+    public Note[] notes;
 }
 
 [Serializable]
-public class ScorePartwise
-{
-    public Part part;
-}
-
-[Serializable]
-public class Part
-{
-    public Measure[] measure;
-}
-
-[Serializable]
-public class Measure
-{
-    public Note[] note;
-}
-
-[Serializable]
-public class Note
-{
+public class Note{
     public Pitch pitch;
     public string step;
     public int duration;

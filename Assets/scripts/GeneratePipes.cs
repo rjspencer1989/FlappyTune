@@ -18,7 +18,7 @@ public class GeneratePipes : MonoBehaviour
         Song song = JsonUtility.FromJson<Song>(json);
     }
 
-    void CreateObstacle(){
+    public IEnumerator CreateObstacle(){
         yPos += heightPerNote;
         Vector3 pos = new Vector3(8, yPos, 0);
 
