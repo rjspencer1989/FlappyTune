@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GeneratePipes : MonoBehaviour
 {
     Camera mainCamera;
     public GameObject pipes;
-    float heightPerNote = 0.0f;
+    float heightPerNote = 0.5f;
     float yPos = 1;
 
     List<string> steps;
@@ -19,6 +20,7 @@ public class GeneratePipes : MonoBehaviour
         TextAsset asset = Resources.Load(songName) as TextAsset;
         string json = asset.text;
         Song song = JsonUtility.FromJson<Song>(json);
+        
         //Find lowest note
         //Find highest note
         //Calculate difference
