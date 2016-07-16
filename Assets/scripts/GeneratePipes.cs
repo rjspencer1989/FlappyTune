@@ -40,12 +40,12 @@ public class GeneratePipes : MonoBehaviour
 
     public IEnumerator CreateObstacle(Song song){
         foreach (Note item in song.notes){
-            yPos = lowPosition + (heightPerNote * item.pitch.getStepNum());
+            //GameObject pipeBox =  Instantiate(pipes, Vector3.zero, Quaternion.identity) as GameObject;
+            //GameObject score = pipeBox.transform.Find("Score").gameObject;
+            yPos = (heightPerNote * item.pitch.getStepNum()) + (score.transform.lossyScale.y / 2);
             Vector3 pos = new Vector3(8, yPos, 0);
-
             print(pos);
-
-            Instantiate(pipes, pos, Quaternion.identity);
+            //pipeBox.transform.Translate(pos);
 
             yield return new WaitForSeconds(1.5f);
         }
