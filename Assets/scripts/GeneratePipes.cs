@@ -6,7 +6,8 @@ using System.Linq;
 public class GeneratePipes : MonoBehaviour
 {
     Camera mainCamera;
-    public GameObject pipes;
+    public GameObject scoreBox;
+    public GameObject pipe;
     float heightPerNote = 0.5f;
     float yPos = 1;
 
@@ -19,7 +20,7 @@ public class GeneratePipes : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        highPosition = (mainCamera.orthographicSize - 0.5f);
+        highPosition = (mainCamera.orthographicSize - scoreBox.transform.localScale.y);
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
         TextAsset asset = Resources.Load(songName) as TextAsset;
@@ -28,31 +29,33 @@ public class GeneratePipes : MonoBehaviour
         List<Note> sorted = song.notes.OrderBy(o=>o.pitch.getPitchValue()).ToList();
         Note lowest = sorted.First();
         Note highest = sorted.Last();
-        print(lowest.pitch.ToString());
-        print(highest.pitch.ToString());
         offset = highest.pitch.getPitchOffset(lowest.pitch);
-        print(offset);
         heightPerNote = (highPosition * 2) / offset;
-        print(heightPerNote);
         new WaitForSeconds(2.0f);
         StartCoroutine(CreateObstacle(song));
     }
 
     public IEnumerator CreateObstacle(Song song){
         foreach (Note item in song.notes){
-            //GameObject pipeBox =  Instantiate(pipes, Vector3.zero, Quaternion.identity) as GameObject;
-            //GameObject score = pipeBox.transform.Find("Score").gameObject;
-            yPos = (heightPerNote * item.pitch.getStepNum()) + (score.transform.lossyScale.y / 2);
+            GameObject score =  Instantiate(scoreBox, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject lowerPipe = Instantiate(pipe, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject upperPipe = Instantiate(pipe, Vector3.zero, Quaternion.identity) as GameObject;
+            yPos = lowPosition + (heightPerNote * item.pitch.getStepNum());
             Vector3 pos = new Vector3(8, yPos, 0);
-            print(pos);
-            //pipeBox.transform.Translate(pos);
-
-            yield return new WaitForSeconds(1.5f);
+            score.transform.Translate(pos);
+            Vector3 bottomPos = new Vector3(pos.x, pos.y, pos.z);
+            Vector3 topPos = new Vector3(pos.x, pos.y, pos.z);
+            float topOffset = mainCamera.orthographicSize - (topPos.y + (score.transform.localScale.y / 2));
+            upperPipe.transform.localScale = new Vector3(upperPipe.transform.localScale.x, topOffset, upperPipe.transform.localScale.z);
+            topPos.y = mainCamera.orthographicSize - (topOffset / 2);
+            topPos.z = -1;
+            upperPipe.transform.Translate(topPos);
+            float bottomOffset = (mainCamera.orthographicSize * -1) - (bottomPos.y - (score.transform.localScale.y / 2));
+            lowerPipe.transform.localScale = new Vector3(lowerPipe.transform.localScale.x, (bottomOffset * -1), lowerPipe.transform.localScale.z);
+            bottomPos.y = -mainCamera.orthographicSize - (bottomOffset / 2);
+            bottomPos.z = -1;
+            lowerPipe.transform.Translate(bottomPos);
+            yield return new WaitForSeconds(2.0f);
         }
-
-        // keep score box fixed height
-        // keep score box bounds between min and max
-        // calculate mid point of score box
-        // pipes will be positioned appropriately
     }
 }
