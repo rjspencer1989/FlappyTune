@@ -10,6 +10,6 @@ public static class MusicParser {
 
     public static void ParseScore(string name){
         LoadFile(name);
-        
+
     }
 }
