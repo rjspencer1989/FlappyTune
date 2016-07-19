@@ -158,6 +158,25 @@ public static class MusicParser {
 
     private static Pitch GetPitch(XmlNode node){
         Pitch pitch = new Pitch();
+        XmlNode subNode = node.SelectSingleNode("pitch");
+        if(subNode != null){
+            XmlNode pitchPartNode = subNode.SelectSingleNode("step");
+            if(pitchPartNode != null){
+                pitch.Step = pitchPartNode.InnerText[0];
+            }
+
+            pitchPartNode = subNode.SelectSingleNode("alter");
+            if(pitchPartNode != null){
+                pitch.Alter = Convert.ToInt32(pitchPartNode.InnerText);
+            }
+
+            pitchPartNode = subNode.SelectSingleNode("octave");
+            if(pitchPartNode != null){
+                pitch.Octave = Convert.ToInt32(pitchPartNode.InnerText);
+            }
+        } else {
+            return null;
+        }
         return pitch;
     }
 }
