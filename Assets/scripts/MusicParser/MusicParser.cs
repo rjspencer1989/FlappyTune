@@ -112,6 +112,37 @@ public static class MusicParser {
 
     private static Note GetNote(XmlNode node){
         Note note = new Note();
+        XmlNode subNode = node.SelectSingleNode("type");
+        if(subNode != null){
+            note.Type = subNode.InnerText;
+        }
+
+        subNode = node.SelectSingleNode("voice");
+        if(subNode != null){
+            note.Voice = Convert.ToInt32(subNode.InnerText);
+        }
+
+        subNode = node.SelectSingleNode("duration");
+        if(subNode != null){
+            note.Duration = Convert.ToInt32(subNode.InnerText);
+        }
+
+        note.Pitch = GetPitch(node);
+
+        subNode = node.SelectSingleNode("staff");
+        if(subNode != null){
+            note.Staff = Convert.ToInt32(subNode.InnerText);
+        }
+
+        subNode = node.SelectSingleNode("chord");
+        if(subNode != null){
+            note.IsChordTone = true;
+        }
+
+        subNode.SelectSingleNode("rest");
+        if(subNode != null){
+            note.IsRest = true;
+        }
         return note;
     }
 
