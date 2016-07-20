@@ -1,77 +1,50 @@
 using System;
-using System.Globalization;
 using System.Xml;
 using UnityEngine;
+using System.IO;
+using System.Globalization;
 
-public static class MusicParser {
-    public static XmlDocument LoadFile(string name){
+public static class MusicParser{
+    public static string LoadFile(string name){
         TextAsset asset = Resources.Load(name) as TextAsset;
-        XmlDocument scoreDocument = new XmlDocument();
-        scoreDocument.LoadXml(asset.text);
-        return scoreDocument;
+        return asset.text;
     }
 
     public static Score ParseScore(string name){
-        XmlDocument doc = LoadFile(name);
         Score score = new Score();
-        XmlNodeList partNodes = doc.SelectNodes("score-partwise/part-list/part");
-        if(partNodes != null){
-            foreach (XmlNode partNode in partNodes){
-                Part part = new Part();
-                score.Parts.Add(part);
-                if(partNode.Attributes != null){
-                    part.Id = partNode.Attributes["id"].InnerText;
-                }
+        string doc = LoadFile(name);
+        XmlTextReader reader = new XmlTextReader(new StringReader(doc));
+        Part part = null;
+        while(reader.Read()){
+            switch (reader.NodeType)
+            {
+                case XmlNodeType.Element:
+                    if(reader.Name == "part"){
+                        part = new Part();
+                        score.Parts.Add(part);
+                        string id = reader.GetAttribute("id");
+                        if(id != null){
+                            part.Id = id;
+                        }
+                    }
 
-                XmlNode partName = partNode.SelectSingleNode("part-name");
-                if(partName != null){
-                    part.Name = partName.InnerText;
-                }
-
-                string measurePath = string.Format("//part[@id='{0}']/measure", part.Id);
-                XmlNodeList measureNodes = partNode.SelectNodes(measurePath);
-
-                if(measureNodes != null){
-                    foreach (XmlNode measureNode in measureNodes){
+                    if(reader.Name == "measure"){
                         Measure measure = new Measure();
+                        part.Measures.Add(measure);
+                        int num = Convert.ToInt32(reader.GetAttribute("number"));
+                        measure.Number = num;
                         decimal w;
-                        if(measureNode.Attributes != null){
-                            if(decimal.TryParse(measureNode.Attributes["width"].InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w)){
-                                measure.Width = w;
-                            }
+                        if(decimal.TryParse(reader.GetAttribute("width"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w)){
+                            measure.Width = w;
                         }
-                        XmlNode attributesNode = measureNode.SelectSingleNode("Attributes");
-                        if(attributesNode != null){
-                            measure.Attributes = new MeasureAttributes();
-
-                            XmlNode divisionsNode = attributesNode.SelectSingleNode("divisions");
-                            if(divisionsNode != null){
-                                measure.Attributes.Divisions = Convert.ToInt32(divisionsNode.InnerText);
-                            }
-
-                            XmlNode keyNode = attributesNode.SelectSingleNode("key");
-                            if(keyNode != null){
-                                measure.Attributes.Key = new Key();
-                                XmlNode fifthNode = keyNode.SelectSingleNode("fifths");
-                                if(fifthNode != null){
-                                    measure.Attributes.Key.Fifths = Convert.ToInt32(fifthNode.InnerText);
-                                }
-
-                                XmlNode modeNode = keyNode.SelectSingleNode("mode");
-                                if(modeNode != null){
-                                    measure.Attributes.Key.Mode = modeNode.InnerText;
-                                }
-                            }
-
-                            measure.Attributes.Time = GetTime(attributesNode);
-                            measure.Attributes.Clef = GetClef(attributesNode);
-                        }
-
-                        XmlNodeList childNodes = measureNode.ChildNodes;
-
+                        var inner = reader.ReadOuterXml();
+                        XmlDocument innerDoc = new XmlDocument();
+                        innerDoc.LoadXml(inner);
+                        XmlNode measureNodes = innerDoc.SelectSingleNode("measure");
+                        XmlNodeList childNodes = measureNodes.ChildNodes;
                         foreach (XmlNode node in childNodes){
+                            
                             MeasureElement measureElement = null;
-
                             if(node.Name == "note"){
                                 measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = GetNote(node)};
                             } else if(node.Name == "backup"){
@@ -84,9 +57,8 @@ public static class MusicParser {
                                 measure.MeasureElements.Add(measureElement);
                             }
                         }
-                        part.Measures.Add(measure);
                     }
-                }
+                break;
             }
         }
         return score;
@@ -139,21 +111,11 @@ public static class MusicParser {
             note.IsChordTone = true;
         }
 
-        subNode.SelectSingleNode("rest");
+        subNode= node.SelectSingleNode("rest");
         if(subNode != null){
             note.IsRest = true;
         }
         return note;
-    }
-
-    private static Clef GetClef(XmlNode node){
-        Clef clef = new Clef();
-        return clef;
-    }
-
-    private static Time GetTime(XmlNode node){
-        Time time = new Time();
-        return time;
     }
 
     private static Pitch GetPitch(XmlNode node){

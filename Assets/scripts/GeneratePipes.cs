@@ -22,6 +22,7 @@ public class GeneratePipes : MonoBehaviour
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
         Score song = MusicParser.ParseScore(songName);
+        
         // List<Note> sorted = song.notes.OrderBy(o=>o.pitch.getPitchValue()).ToList();
         // Note lowest = sorted.First();
         // Note highest = sorted.Last();
