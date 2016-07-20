@@ -2,7 +2,6 @@ using System;
 using System.Xml;
 using UnityEngine;
 using System.IO;
-using System.Globalization;
 
 public static class MusicParser{
     public static string LoadFile(string name){
@@ -10,40 +9,20 @@ public static class MusicParser{
         return asset.text;
     }
 
-    public static Score ParseScore(string name){
-        Score score = new Score();
+    public static Song ParseScore(string name){
+        Song song = new Song();
         string doc = LoadFile(name);
         XmlTextReader reader = new XmlTextReader(new StringReader(doc));
-        Part part = null;
         while(reader.Read()){
-            switch (reader.NodeType)
-            {
+            switch (reader.NodeType){
                 case XmlNodeType.Element:
-                    if(reader.Name == "part"){
-                        part = new Part();
-                        score.Parts.Add(part);
-                        string id = reader.GetAttribute("id");
-                        if(id != null){
-                            part.Id = id;
-                        }
-                    }
-
                     if(reader.Name == "measure"){
-                        Measure measure = new Measure();
-                        part.Measures.Add(measure);
-                        int num = Convert.ToInt32(reader.GetAttribute("number"));
-                        measure.Number = num;
-                        decimal w;
-                        if(decimal.TryParse(reader.GetAttribute("width"), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w)){
-                            measure.Width = w;
-                        }
                         var inner = reader.ReadOuterXml();
                         XmlDocument innerDoc = new XmlDocument();
                         innerDoc.LoadXml(inner);
                         XmlNode measureNodes = innerDoc.SelectSingleNode("measure");
                         XmlNodeList childNodes = measureNodes.ChildNodes;
                         foreach (XmlNode node in childNodes){
-                            
                             MeasureElement measureElement = null;
                             if(node.Name == "note"){
                                 measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = GetNote(node)};
@@ -54,14 +33,14 @@ public static class MusicParser{
                             }
 
                             if(measureElement != null){
-                                measure.MeasureElements.Add(measureElement);
+                                song.MeasureElements.Add(measureElement);
                             }
                         }
                     }
                 break;
             }
         }
-        return score;
+        return song;
     }
 
     private static Forward GetForwardElement(XmlNode node){
