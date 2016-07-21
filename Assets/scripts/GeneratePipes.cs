@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GeneratePipes : MonoBehaviour
 {
@@ -22,8 +24,15 @@ public class GeneratePipes : MonoBehaviour
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
         Song song = MusicParser.ParseScore(songName);
+
+        List<Note> notes = new List<Note>();
+        foreach (var item in song.MeasureElements){
+            if(item.Type == MeasureElementType.Note){
+                notes.Add(item.Element as Note);
+            }
+        }
         
-        // List<Note> sorted = song.notes.OrderBy(o=>o.pitch.getPitchValue()).ToList();
+        List<Note> sorted = notes.OrderBy(o=>o.Pitch).ToList();
         // Note lowest = sorted.First();
         // Note highest = sorted.Last();
         // print(highest.pitch); 
