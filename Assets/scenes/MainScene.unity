@@ -714,8 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d9bec74122d45e09c58b4984ad950e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreBox: {fileID: 152296, guid: dd7cbd4b84b9c42ddadceeca96e9a940, type: 2}
-  pipe: {fileID: 105820, guid: 13ae42d3c6ed145abba39469962650c5, type: 2}
+  pipeBox: {fileID: 116080, guid: b86b61699f74549ada614771911f161d, type: 2}
 --- !u!4 &1380454667
 Transform:
   m_ObjectHideFlags: 0

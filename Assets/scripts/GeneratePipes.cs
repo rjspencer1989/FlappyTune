@@ -6,8 +6,7 @@ using System.Linq;
 public class GeneratePipes : MonoBehaviour
 {
     Camera mainCamera;
-    public GameObject scoreBox;
-    public GameObject pipe;
+    public GameObject pipeBox;
     double heightPerNote = 0.5;
     float yPos = 1;
 
@@ -20,7 +19,7 @@ public class GeneratePipes : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        highPosition = (mainCamera.orthographicSize - scoreBox.transform.localScale.y);
+        highPosition = pipeBox.transform.Find("ScoreBox").transform.localScale.y;
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
         Song song = MusicParser.ParseScore(songName);
@@ -45,24 +44,10 @@ public class GeneratePipes : MonoBehaviour
     public IEnumerator CreateObstacle(List<Note> notes, List<Note> sorted){
         foreach (Note item in notes){
             if(!item.IsRest){
-                GameObject score =  Instantiate(scoreBox, Vector3.zero, Quaternion.identity) as GameObject;
-                GameObject lowerPipe = Instantiate(pipe, Vector3.zero, Quaternion.identity) as GameObject;
-                GameObject upperPipe = Instantiate(pipe, Vector3.zero, Quaternion.identity) as GameObject;
+                GameObject score =  Instantiate(pipeBox, Vector3.zero, Quaternion.identity) as GameObject;
                 yPos = lowPosition + (float)(heightPerNote * (sorted.IndexOf(item)));
                 Vector3 pos = new Vector3(8, yPos, 0);
                 score.transform.Translate(pos);
-                Vector3 bottomPos = new Vector3(pos.x, pos.y, pos.z);
-                Vector3 topPos = new Vector3(pos.x, pos.y, pos.z);
-                float topOffset = mainCamera.orthographicSize - (topPos.y + (score.transform.localScale.y / 2));
-                upperPipe.transform.localScale = new Vector3(upperPipe.transform.localScale.x, topOffset, upperPipe.transform.localScale.z);
-                topPos.y = mainCamera.orthographicSize - (topOffset / 2);
-                topPos.z = -1;
-                upperPipe.transform.Translate(topPos);
-                float bottomOffset = (mainCamera.orthographicSize * -1) - (bottomPos.y - (score.transform.localScale.y / 2));
-                lowerPipe.transform.localScale = new Vector3(lowerPipe.transform.localScale.x, (bottomOffset * -1), lowerPipe.transform.localScale.z);
-                bottomPos.y = -mainCamera.orthographicSize - (bottomOffset / 2);
-                bottomPos.z = -1;
-                lowerPipe.transform.Translate(bottomPos);
             }
             yield return new WaitForSeconds(2.0f);
         }
