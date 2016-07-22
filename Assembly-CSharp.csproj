@@ -58,6 +58,7 @@
      <Compile Include="Assets\scripts\MusicParser\MusicParser.cs" />
      <Compile Include="Assets\scripts\MusicParser\Note.cs" />
      <Compile Include="Assets\scripts\MusicParser\Pitch.cs" />
+     <Compile Include="Assets\scripts\MusicParser\PitchComparer.cs" />
      <Compile Include="Assets\scripts\MusicParser\Song.cs" />
      <Compile Include="Assets\scripts\Player.cs" />
      <Compile Include="Assets\scripts\Scenes.cs" />
