@@ -6,11 +6,14 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D rb;
 	public float speed;
 	public Text scoreText;
+	AudioSource audioSource;
 	int score = 0;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		setScoreText();
+
+		audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -45,7 +48,14 @@ public class Player : MonoBehaviour {
 		if(other.CompareTag("score")){
 			score += 1;
 			setScoreText();
-		}
+            audioSource.PlayOneShot(Resources.Load("C4") as AudioClip);
+        }
+	}
+
+	void OnTriggerExit2D(Collider2D other){
+		if(other.CompareTag("score")){
+            audioSource.Stop();
+        }
 	}
 
 	void setScoreText(){

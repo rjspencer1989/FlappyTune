@@ -22,6 +22,7 @@ public static class MusicParser{
                         innerDoc.LoadXml(inner);
                         XmlNode measureNodes = innerDoc.SelectSingleNode("measure");
                         XmlNodeList childNodes = measureNodes.ChildNodes;
+                        
                         foreach (XmlNode node in childNodes){
                             MeasureElement measureElement = null;
                             if(node.Name == "note"){
