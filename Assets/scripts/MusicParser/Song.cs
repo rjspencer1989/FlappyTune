@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public class Song {
     internal Song() {
-        MeasureElements = new List<MeasureElement>();
+        Measures = new List<Measure>();
     }
 
-    public List<MeasureElement> MeasureElements { get; internal set; }
+    public List<Measure> Measures { get; internal set; }
 }
