@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GeneratePipes : MonoBehaviour
-{
-    Camera mainCamera;
+public class GeneratePipes : MonoBehaviour{
     public GameObject pipeBox;
     double heightPerNote = 0.5;
     float yPos = 1;
@@ -18,16 +16,17 @@ public class GeneratePipes : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        mainCamera = Camera.main;
         highPosition = pipeBox.transform.Find("ScoreBox").transform.localScale.y;
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
         Song song = MusicParser.ParseScore(songName);
 
         List<Note> notes = new List<Note>();
-        foreach (var item in song.MeasureElements){
-            if(item.Type == MeasureElementType.Note){
-                notes.Add(item.Element as Note);
+        foreach (var measure in song.Measures){
+            foreach (var item in measure.MeasureElements){
+                if(item.Type == MeasureElementType.Note){
+                    notes.Add(item.Element as Note);
+                }    
             }
         }
         

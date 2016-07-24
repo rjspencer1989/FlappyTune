@@ -2,6 +2,7 @@ using System;
 using System.Xml;
 using UnityEngine;
 using System.IO;
+using System.Globalization;
 
 public static class MusicParser{
     public static string LoadFile(string name){
@@ -20,8 +21,74 @@ public static class MusicParser{
                         var inner = reader.ReadOuterXml();
                         XmlDocument innerDoc = new XmlDocument();
                         innerDoc.LoadXml(inner);
-                        XmlNode measureNodes = innerDoc.SelectSingleNode("measure");
-                        XmlNodeList childNodes = measureNodes.ChildNodes;
+                        XmlNode measureNode = innerDoc.SelectSingleNode("measure");
+                        Measure measure = new Measure();
+                        if(measureNode.Attributes != null){
+                            var measureWidthAttribute = measureNode.Attributes["width"];
+                            decimal w;
+                            if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out w)){
+                                measure.Width = w;
+                            }
+                            var measureNumberAttribute = measureNode.Attributes["number"];
+                            int n;
+                            if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText, NumberStyles.Integer, CultureInfo.InvariantCulture,out n)){
+                                measure.Number = n;
+                            }
+                        }
+
+                        var attributesNode = measureNode.SelectSingleNode("attributes");
+                        if(attributesNode != null){
+                            measure.MeasureAttributes = new MeasureAttribute();
+                            var divisionNode = attributesNode.SelectSingleNode("divisions");
+                            if(divisionNode != null){
+                                measure.MeasureAttributes.Divisions = Convert.ToInt32(divisionNode.InnerText);
+                            }
+
+                            var keyNode = attributesNode.SelectSingleNode("key");
+                            if(keyNode != null){
+                                measure.MeasureAttributes.Key = new Key();
+                                var fifthsNode = keyNode.SelectSingleNode("fifths");
+                                if(fifthsNode != null){
+                                    measure.MeasureAttributes.Key.Fifths = Convert.ToInt32(fifthsNode.InnerText);
+                                }
+                                var modeNode = keyNode.SelectSingleNode("mode");
+                                if(modeNode != null){
+                                    measure.MeasureAttributes.Key.Mode = modeNode.InnerText;
+                                }
+                            }
+
+                            measure.MeasureAttributes.Time = GetTime(attributesNode);
+                            measure.MeasureAttributes.Clef = GetClef(attributesNode);
+                        }
+
+                        var directionNode = measureNode.SelectSingleNode("direction");
+                        if(directionNode != null){
+                            measure.Direction = new DirectionElement();
+                            var soundNode = directionNode.SelectSingleNode("sound");
+                            if(soundNode != null){
+                                measure.Direction.Sound = new SoundElement();
+                                measure.Direction.Sound.Tempo = Convert.ToInt32(soundNode.Attributes["tempo"]);
+                            }
+                            var typeNode = directionNode.SelectSingleNode("direction-type");
+                            if(typeNode != null){
+                                measure.Direction.Type = new DirectionType();
+                                var MetronomeNode = typeNode.SelectSingleNode("metronome");
+                                if(MetronomeNode != null){
+                                    measure.Direction.Type.MetronomeMark = new Metronome();
+                                    var beatNode = MetronomeNode.SelectSingleNode("beat-unit");
+                                    if(beatNode != null){
+                                        measure.Direction.Type.MetronomeMark.BeatUnit = beatNode.InnerText;
+                                    }
+
+                                    var minuteNode = MetronomeNode.SelectSingleNode("per-minute");
+                                    if(minuteNode != null){
+                                        measure.Direction.Type.MetronomeMark.PerMinute = Convert.ToInt32(minuteNode.InnerText);
+                                    }
+                                }
+                            }
+                        }
+
+                        XmlNodeList childNodes = measureNode.ChildNodes;
                         
                         foreach (XmlNode node in childNodes){
                             MeasureElement measureElement = null;
@@ -34,9 +101,10 @@ public static class MusicParser{
                             }
 
                             if(measureElement != null){
-                                song.MeasureElements.Add(measureElement);
+                                measure.MeasureElements.Add(measureElement);
                             }
                         }
+                        song.Measures.Add(measure);
                     }
                 break;
             }
@@ -121,4 +189,68 @@ public static class MusicParser{
         }
         return pitch;
     }
+
+    private static Clef GetClef(XmlNode attributesNode)
+		{
+			var clef = new Clef();
+
+			var clefNode = attributesNode.SelectSingleNode("clef");
+
+			if (clefNode != null)
+			{
+				var lineNode = clefNode.SelectSingleNode("line");
+				if (lineNode != null)
+					clef.Line = Convert.ToInt32(lineNode.InnerText);
+
+				var signNode = clefNode.SelectSingleNode("sign");
+				if (signNode != null)
+					clef.Sign = signNode.InnerText;
+			}
+			return clef;
+		}
+
+		private static Time GetTime(XmlNode attributesNode)
+		{
+			var time = new Time();
+
+			var timeNode = attributesNode.SelectSingleNode("time");
+			if (timeNode != null)
+			{
+				var beatsNode = timeNode.SelectSingleNode("beats");
+
+				if (beatsNode != null)
+					time.Beats = Convert.ToInt32(beatsNode.InnerText);
+
+				var beatTypeNode = timeNode.SelectSingleNode("beat-type");
+
+				if (beatTypeNode != null)
+					time.Mode = beatTypeNode.InnerText;
+
+				var symbol = TimeSymbol.Normal;
+
+				if (timeNode.Attributes != null)
+				{
+					var symbolAttribute = timeNode.Attributes["symbol"];
+
+					if (symbolAttribute != null)
+					{
+						switch (symbolAttribute.InnerText)
+						{
+							case "common":
+								symbol = TimeSymbol.Common;
+								break;
+							case "cut":
+								symbol = TimeSymbol.Cut;
+								break;
+							case "single-number":
+								symbol = TimeSymbol.SingleNumber;
+								break;
+						}
+					}
+				}
+
+				time.Symbol = symbol;
+			}
+			return time;
+		}
 }
