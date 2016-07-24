@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
 		if(other.CompareTag("score")){
 			score += 1;
 			setScoreText();
-            audioSource.PlayOneShot(Resources.Load("C4") as AudioClip);
+            audioSource.PlayOneShot(Resources.Load("Instruments/CathedralOrgan/A4_Quarter") as AudioClip);
         }
 	}
 
