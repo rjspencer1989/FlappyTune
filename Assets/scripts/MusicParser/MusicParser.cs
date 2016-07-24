@@ -67,7 +67,11 @@ public static class MusicParser{
                             var soundNode = directionNode.SelectSingleNode("sound");
                             if(soundNode != null){
                                 measure.Direction.Sound = new SoundElement();
-                                measure.Direction.Sound.Tempo = Convert.ToInt32(soundNode.Attributes["tempo"]);
+                                var tempoAttribute = soundNode.Attributes["tempo"];
+                                int t;
+                                if (tempoAttribute != null && int.TryParse(tempoAttribute.InnerText, NumberStyles.Integer, CultureInfo.InvariantCulture,out t)){
+                                    measure.Direction.Sound.Tempo = t;
+                                }
                             }
                             var typeNode = directionNode.SelectSingleNode("direction-type");
                             if(typeNode != null){
