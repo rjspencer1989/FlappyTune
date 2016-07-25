@@ -84,4 +84,21 @@ public class Pitch {
         }
         return alter;
     }
+
+    public string getAlterAsString(){
+        string alterString = "natural";
+        switch (this.Alter)
+        {
+            case 1:
+                alterString = "sharp";
+                break;
+            case -1:
+                alterString = "flat";
+                break;
+            default:
+                alterString = "natural";
+                break;
+        }
+        return alterString;
+    }
 }

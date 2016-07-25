@@ -4,21 +4,14 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 	private Rigidbody2D rb;
-	public float speed;
 	public Text scoreText;
-	AudioSource audioSource;
 	int score = 0;
+	public float speed;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		setScoreText();
 
-		audioSource = GetComponent<AudioSource>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	void FixedUpdate () {
@@ -45,16 +38,16 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if(other.CompareTag("score")){
+		if(other.gameObject.CompareTag("score")){
 			score += 1;
 			setScoreText();
-            audioSource.PlayOneShot(Resources.Load("Instruments/CathedralOrgan/A4_Quarter") as AudioClip);
+            other.GetComponent<AudioSource>().Play();
         }
 	}
 
 	void OnTriggerExit2D(Collider2D other){
 		if(other.CompareTag("score")){
-            audioSource.Stop();
+			other.GetComponent<AudioSource>().Stop();
         }
 	}
 

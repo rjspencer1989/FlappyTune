@@ -5,6 +5,7 @@ using System.Linq;
 
 public class GeneratePipes : MonoBehaviour{
     public GameObject pipeBox;
+    public string instrument = "church_organ";
     double heightPerNote = 0.5;
     float yPos = 1;
 
@@ -44,6 +45,9 @@ public class GeneratePipes : MonoBehaviour{
         foreach (Note item in notes){
             if(!item.IsRest){
                 GameObject score =  Instantiate(pipeBox, Vector3.zero, Quaternion.identity) as GameObject;
+                AudioSource audioSource = score.transform.Find("ScoreBox").GetComponent<AudioSource>();
+                string audioPath = string.Format("Instruments/{0}/{1}_{2}_{3}", instrument, item.Pitch.Step, item.Pitch.getAlterAsString(), item.Pitch.Octave);
+                audioSource.clip = Resources.Load(audioPath) as AudioClip;
                 yPos = lowPosition + (float)(heightPerNote * (sorted.IndexOf(item)));
                 Vector3 pos = new Vector3(8, yPos, 0);
                 score.transform.Translate(pos);
