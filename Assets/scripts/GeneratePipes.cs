@@ -46,8 +46,11 @@ public class GeneratePipes : MonoBehaviour{
             if(!item.IsRest){
                 GameObject score =  Instantiate(pipeBox, Vector3.zero, Quaternion.identity) as GameObject;
                 AudioSource audioSource = score.transform.Find("ScoreBox").GetComponent<AudioSource>();
-                string audioPath = string.Format("Instruments/{0}/{1}_{2}_{3}", instrument, item.Pitch.Step, item.Pitch.getAlterAsString(), item.Pitch.Octave);
+                string audioPath = string.Format("Instruments/{0}/{1}{2}", instrument, item.Pitch.Step, item.Pitch.Octave);
                 audioSource.clip = Resources.Load(audioPath) as AudioClip;
+                if(item.Pitch.Alter != 0){
+                    audioSource.pitch += Mathf.Pow(2, item.Pitch.Alter / 12);
+                }
                 yPos = lowPosition + (float)(heightPerNote * (sorted.IndexOf(item)));
                 Vector3 pos = new Vector3(8, yPos, 0);
                 score.transform.Translate(pos);
