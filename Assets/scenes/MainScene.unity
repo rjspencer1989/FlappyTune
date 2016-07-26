@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipeBox: {fileID: 116080, guid: b86b61699f74549ada614771911f161d, type: 2}
-  instrument: grand_piano
+  instrument: cathedral_organ
 --- !u!4 &1380454667
 Transform:
   m_ObjectHideFlags: 0
