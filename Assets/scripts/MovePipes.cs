@@ -8,7 +8,7 @@ public class MovePipes : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		this.transform.Translate (new Vector3 (-0.05f, 0, 0));
 	}
 }
