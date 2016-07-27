@@ -2,11 +2,12 @@ public enum TimeSymbol{
     Normal, Common, Cut, SingleNumber
 }
 
-public class Time{
-    internal Time()
+public class TimeSignature{
+    internal TimeSignature()
     {
         Beats = 0;
         Mode = string.Empty;
+
     }
 
     public int Beats { get; internal set; }

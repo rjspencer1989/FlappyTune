@@ -213,9 +213,9 @@ public static class MusicParser{
 			return clef;
 		}
 
-		private static Time GetTime(XmlNode attributesNode)
+		private static TimeSignature GetTime(XmlNode attributesNode)
 		{
-			var time = new Time();
+			var time = new TimeSignature();
 
 			var timeNode = attributesNode.SelectSingleNode("time");
 			if (timeNode != null)

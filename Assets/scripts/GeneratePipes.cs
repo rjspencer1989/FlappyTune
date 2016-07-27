@@ -19,6 +19,7 @@ public class GeneratePipes : MonoBehaviour{
     List<Note> notesUsed;
 
     double offset = 0;
+    float updateInterval = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -51,8 +52,33 @@ public class GeneratePipes : MonoBehaviour{
         StartCoroutine("CreateObstacle");
     }
 
+    void FixedUpdate(){
+        updateInterval = Time.deltaTime;
+    }
+
     public IEnumerator CreateObstacle(){
         foreach (Measure measure in song.Measures){
+            //use time sig beat type as beat def.
+            //get bpm from metronome, to calculate time duration of 1 beat
+            //eg if beat is quarter note, and metronome is 60, each quarter note lasts 1 second.
+            //this is base setting
+            //each pipe is 0.5 units at x scale 1.
+            //each pipe moved 0.05 units per fixedupdate
+            //num movements to enter and leave pipe is width/movement eg 0.5/0.05 = 10 movements
+            //each movement is updateInterval often eg 0.02
+            //(width/movement) * updateInterval = time from enter to leave eg 10 * 0.02 = 0.2 seconds
+            //need width/movement * updateInterval == beat length.
+            //need xscale such that width/movement * updateInterval == beat length
+            //if beat time == 0.2 at xscale 1 beat xscale must be 5 so that beat time == 1 second.
+            //multiply or divide by two as many times as difference between beat type and type of note.
+            //eg if beat type is quarter and notes are halves the xscale of a half note would be twice that of a quarter.
+            //eg if beat type is quarter and notes are eigths, the xscale will be half of a quarter
+            //set the waitforseconds value to create the next pipe in time
+            //if beat is quarter and 80bpm, each quarter is 0.75 seconds, so waitforseconds = 0.75
+            //if note is half, waitforseconds = 1.5 seconds
+            //if note is eighth, waitforseconds = 0.375 seconds etc
+
+
             if(measure.Direction.Type.MetronomeMark.PerMinute != 0){
                 beatDuration = SECONDS_IN_MINUTE / measure.Direction.Type.MetronomeMark.PerMinute;
             }

@@ -5,6 +5,6 @@ public class MeasureAttribute{
 
     public int Divisions { get; internal set; }
     public Key Key { get; internal set; }
-    public Time Time { get; internal set; }
+    public TimeSignature Time { get; internal set; }
     public Clef Clef { get; internal set; }
 }
