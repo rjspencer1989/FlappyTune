@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 	private Rigidbody2D rb;
 	public Text scoreText;
-	int score = 0;
+    float pipeTime;
+    int score = 0;
 	public float speed;
 	// Use this for initialization
 	void Start () {
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour {
 			score += 1;
 			setScoreText();
             other.GetComponent<AudioSource>().Play();
+            pipeTime = UnityEngine.Time.time;
         }
 	}
 
