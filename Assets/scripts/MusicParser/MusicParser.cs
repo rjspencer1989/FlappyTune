@@ -86,7 +86,7 @@ public static class MusicParser{
 
                                     var minuteNode = MetronomeNode.SelectSingleNode("per-minute");
                                     if(minuteNode != null){
-                                        measure.Direction.Type.MetronomeMark.PerMinute = Convert.ToInt32(minuteNode.InnerText);
+                                        measure.Direction.Type.MetronomeMark.PerMinute = float.Parse(minuteNode.InnerText);
                                     }
                                 }
                             }
