@@ -1,18 +1,10 @@
 using System;
 using System.Xml;
-using UnityEngine;
 using System.IO;
 using System.Globalization;
 
 public static class MusicParser{
-    public static string LoadFile(string name){
-        TextAsset asset = Resources.Load(name) as TextAsset;
-        return asset.text;
-    }
-
-    public static Song ParseScore(string name){
-        Song song = new Song();
-        string doc = LoadFile(name);
+    public static Song ParseScore(string doc){
         XmlTextReader reader = new XmlTextReader(new StringReader(doc));
         while(reader.Read()){
             switch (reader.NodeType){

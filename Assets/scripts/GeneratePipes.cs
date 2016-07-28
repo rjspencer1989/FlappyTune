@@ -27,7 +27,8 @@ public class GeneratePipes : MonoBehaviour{
         highPosition = pipeBox.transform.Find("ScoreBox").transform.localScale.y;
         lowPosition = -highPosition;
         string songName = Scenes.getParameter("songName");
-        song = MusicParser.ParseScore(songName);
+        TextAsset asset = Resources.Load(songName) as TextAsset;
+        song = MusicParser.ParseScore(asset.text);
 
         List<Note> notes = new List<Note>();
         foreach (var measure in song.Measures){
