@@ -3,6 +3,5 @@
 public class MovePipes : MonoBehaviour {
 	void FixedUpdate () {
 		this.transform.Translate (new Vector3 (-0.05f, 0, 0));
-        print(UnityEngine.Time.deltaTime);
     }
 }

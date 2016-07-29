@@ -5,6 +5,7 @@ using System.Globalization;
 
 public static class MusicParser{
     public static Song ParseScore(string doc){
+        Song song = new Song();
         XmlTextReader reader = new XmlTextReader(new StringReader(doc));
         while(reader.Read()){
             switch (reader.NodeType){

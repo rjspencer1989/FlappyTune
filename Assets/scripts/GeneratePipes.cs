@@ -96,7 +96,8 @@ public class GeneratePipes : MonoBehaviour{
                                 audioSource.pitch += Mathf.Pow(2, note.Pitch.Alter / 12);
                             }
                             yPos = lowPosition + (float)(heightPerNote * (notesUsed.IndexOf(note)));
-                            Vector3 pos = new Vector3(8, yPos, 0);
+                            print(yPos);
+                            Vector3 pos = new Vector3(8, yPos, 1);
                             score.transform.Translate(pos);
                         }
                         break;
