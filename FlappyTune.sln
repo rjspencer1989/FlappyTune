@@ -4,6 +4,8 @@ Project("{48CE7BBA-0735-3351-9930-BB7772B7CD54}") = "FlappyTune", "Assembly-CSha
 EndProject
 Project("{48CE7BBA-0735-3351-9930-BB7772B7CD54}") = "FlappyTune", "Assembly-CSharp-Editor-firstpass.csproj", "{9F86B63B-2A47-B010-3F13-3732A57F7BEF}"
 EndProject
+Project("{48CE7BBA-0735-3351-9930-BB7772B7CD54}") = "FlappyTune", "Assembly-CSharp-Editor.csproj", "{5FF167BA-45B1-BE20-7524-FC9975487633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F86B63B-2A47-B010-3F13-3732A57F7BEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FF167BA-45B1-BE20-7524-FC9975487633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF167BA-45B1-BE20-7524-FC9975487633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF167BA-45B1-BE20-7524-FC9975487633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF167BA-45B1-BE20-7524-FC9975487633}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
