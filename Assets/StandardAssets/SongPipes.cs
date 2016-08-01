@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+[Serializable]
 public class SongPipes : ScriptableObject{
-    List<Pipe> pipes;
+    public List<Pipe> pipes { get; set; }
 
     void OnEnable(){
         if(pipes == null){

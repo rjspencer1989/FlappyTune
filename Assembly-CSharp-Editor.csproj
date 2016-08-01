@@ -48,24 +48,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\StandardAssets\Editor\Backup.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Clef.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\DirectionElement.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\DirectionType.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Forward.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Key.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Measure.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\MeasureAttribute.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\MeasureElement.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Metronome.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\MusicParser.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Note.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Pitch.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\PitchComparer.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\Song.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\SoundElement.cs" />
-     <Compile Include="Assets\StandardAssets\Editor\TimeSignature.cs" />
-     <None Include="Assets\Resources\star.xml" />
+     <Compile Include="Assets\Editor\Backup.cs" />
+     <Compile Include="Assets\Editor\Clef.cs" />
+     <Compile Include="Assets\Editor\DirectionElement.cs" />
+     <Compile Include="Assets\Editor\DirectionType.cs" />
+     <Compile Include="Assets\Editor\Forward.cs" />
+     <Compile Include="Assets\Editor\Key.cs" />
+     <Compile Include="Assets\Editor\Measure.cs" />
+     <Compile Include="Assets\Editor\MeasureAttribute.cs" />
+     <Compile Include="Assets\Editor\MeasureElement.cs" />
+     <Compile Include="Assets\Editor\Metronome.cs" />
+     <Compile Include="Assets\Editor\MusicXmlImporter.cs" />
+     <Compile Include="Assets\Editor\MusicXmlParser.cs" />
+     <Compile Include="Assets\Editor\Note.cs" />
+     <Compile Include="Assets\Editor\Pitch.cs" />
+     <Compile Include="Assets\Editor\PitchComparer.cs" />
+     <Compile Include="Assets\Editor\Song.cs" />
+     <Compile Include="Assets\Editor\SoundElement.cs" />
+     <Compile Include="Assets\Editor\TimeSignature.cs" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

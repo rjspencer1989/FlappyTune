@@ -1,3 +1,5 @@
 Library/*
 Temp/*
-Builds/*
+Build/*
+*.meta
+*.dll
