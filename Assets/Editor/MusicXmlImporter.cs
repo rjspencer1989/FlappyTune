@@ -3,6 +3,7 @@ using UnityEditor;
 using MusicParser;
 using UnityEngine;
 using System.Text;
+using System.IO;
 
 public class MusicXmlImporter : AssetPostprocessor{
     static string extension = ".xml";
@@ -22,7 +23,8 @@ public class MusicXmlImporter : AssetPostprocessor{
     public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths){
         foreach (string item in importedAssets){
             if(HasExtension(item)){
-                Song score = MusicXmlParser.ParseScore(item);
+                StreamReader reader = new StreamReader(item);
+                Song score = MusicXmlParser.ParseScore(reader.ReadToEnd());
                 SongPipes songPipes = ScriptableObject.CreateInstance("SongPipes") as SongPipes;
                 Pipe p = ScriptableObject.CreateInstance("Pipe") as Pipe;
                 p.Step = 'C';
