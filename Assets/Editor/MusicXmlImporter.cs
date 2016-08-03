@@ -29,14 +29,24 @@ public class MusicXmlImporter : AssetPostprocessor{
                 StreamReader reader = new StreamReader(item);
                 string data = reader.ReadToEnd();
                 Song score = MusicXmlParser.ParseScore(data);
-                Pipe p = new Pipe();
-                p.Step = 'C';
-                p.Alter = 0;
-                p.Octave = 4;
-                p.BeatType = "quarter";
-                p.Type = "quarter";
-                p.Tempo = 80;
-                pipes.Add(p);
+                foreach (Measure measure in score.Measures){
+                    foreach(MeasureElement element in measure.MeasureElements){
+                        if(element.Type == MeasureElementType.Note){
+                            Note n = element.Element as Note;
+                            if(!n.IsRest){
+                                Pipe p = new Pipe();
+                                p.Step = n.Pitch.Step;
+                                p.Alter = n.Pitch.Alter;
+                                p.Octave = n.Pitch.Octave;
+                                p.Type = n.Type;
+                                p.BeatType = measure.Direction.Type.MetronomeMark.BeatUnit;
+                                p.Tempo = measure.Direction.Type.MetronomeMark.PerMinute;
+                                pipes.Add(p);
+                            }
+                        }
+                    }
+                }
+                
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Create(GetAssetPath(item));
                 bf.Serialize(file, pipes);

@@ -39,7 +39,7 @@ public class GeneratePipes : MonoBehaviour{
         // offset = highest.Pitch.getPitchOffset(lowest.Pitch);
         // heightPerNote = (highPosition * 2) / offset;
         new WaitForSeconds(2.0f);
-        StartCoroutine(CreateObstacle(pipes));
+        //StartCoroutine(CreateObstacle(pipes));
     }
 
     void FixedUpdate(){
@@ -50,12 +50,12 @@ public class GeneratePipes : MonoBehaviour{
         foreach (var item in pipes){
             if(item != null){
                 GameObject score = Instantiate(pipeBox, Vector3.zero, Quaternion.identity) as GameObject;
-                AudioSource audioSource = score.transform.Find("ScoreBox").GetComponent<AudioSource>();
-                string audioPath = string.Format("Instruments/{0}/{1}{2}", instrument, item.Step, item.Octave);
-                audioSource.clip = Resources.Load(audioPath) as AudioClip;
-                if (item.Alter != 0){
-                    audioSource.pitch += Mathf.Pow(2, item.Alter / 12);
-                }
+                //AudioSource audioSource = score.transform.Find("ScoreBox").GetComponent<AudioSource>();
+                //string audioPath = string.Format("Instruments/{0}/{1}{2}", instrument, item.Step, item.Octave);
+                //audioSource.clip = Resources.Load(audioPath) as AudioClip;
+                //if (item.Alter != 0){
+                //    audioSource.pitch += Mathf.Pow(2, item.Alter / 12);
+                //}
             }
         }
         //         //use time sig beat type as beat def.

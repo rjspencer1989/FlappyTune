@@ -7,5 +7,5 @@ public class Pipe{
     public int Alter { get; set; }
     public string Type { get; set; }
     public string BeatType { get; set; }
-    public int Tempo { get; set; }
+    public float Tempo { get; set; }
 }
