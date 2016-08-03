@@ -1,8 +1,7 @@
 using System;
-using UnityEngine;
 
 [Serializable]
-public class Pipe : ScriptableObject{
+public class Pipe{
     public char Step { get; set; }
     public int Octave { get; set; }
     public int Alter { get; set; }
