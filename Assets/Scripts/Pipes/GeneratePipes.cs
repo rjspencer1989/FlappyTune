@@ -57,7 +57,7 @@ public class GeneratePipes : MonoBehaviour{
                     audioSource.pitch += Mathf.Pow(2, item.Alter / 12);
                 }
             }
-            yield return new WaitForSecondsRealtime(2);
+            yield return new WaitForSecondsRealtime(SECONDS_IN_MINUTE / item.Tempo);
         }
         //         //use time sig beat type as beat def.
         //         //get bpm from metronome, to calculate time duration of 1 beat

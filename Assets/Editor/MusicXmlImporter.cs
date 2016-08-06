@@ -26,6 +26,8 @@ public class MusicXmlImporter : AssetPostprocessor{
         List<Pipe> pipes = new List<Pipe>();
         foreach (string item in importedAssets){
             if(HasExtension(item)){
+                float tempo = 0;
+                string bt = "";
                 StreamReader reader = new StreamReader(item);
                 string data = reader.ReadToEnd();
                 Song score = MusicXmlParser.ParseScore(data);
@@ -39,8 +41,12 @@ public class MusicXmlImporter : AssetPostprocessor{
                                 p.Alter = n.Pitch.Alter;
                                 p.Octave = n.Pitch.Octave;
                                 p.Type = n.Type;
-                                p.BeatType = measure.Direction.Type.MetronomeMark.BeatUnit;
-                                p.Tempo = measure.Direction.Type.MetronomeMark.PerMinute;
+                                if(measure.Direction.Type.MetronomeMark.PerMinute > 0){
+                                    bt = measure.Direction.Type.MetronomeMark.BeatUnit;
+                                    tempo = measure.Direction.Type.MetronomeMark.PerMinute;
+                                }
+                                p.BeatType = bt;
+                                p.Tempo = tempo;
                                 pipes.Add(p);
                             }
                         }
