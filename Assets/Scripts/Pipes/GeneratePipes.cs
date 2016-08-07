@@ -54,7 +54,10 @@ public class GeneratePipes : MonoBehaviour{
                 string audioPath = string.Format("Instruments/{0}/{1}{2}", instrument, item.Step, item.Octave);
                 audioSource.clip = Resources.Load(audioPath) as AudioClip;
                 if (item.Alter != 0){
-                    audioSource.pitch += Mathf.Pow(2, item.Alter / 12);
+                    print(item.Alter);
+                    float adjust = Mathf.Pow(2, (item.Alter / 12.0f));
+                    print(adjust);
+                    audioSource.pitch *= adjust;
                 }
             }
             yield return new WaitForSecondsRealtime(SECONDS_IN_MINUTE / item.Tempo);

@@ -3,3 +3,4 @@ Temp/*
 Build/*
 *.meta
 *.dll
+*.bytes

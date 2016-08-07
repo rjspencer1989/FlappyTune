@@ -2,13 +2,27 @@ using System;
 using System.Xml;
 using System.IO;
 using System.Globalization;
+using UnityEditor;
 
 namespace MusicParser{
     public static class MusicXmlParser{
         public static Song ParseScore(string doc){
             Song song = new Song();
-            XmlTextReader reader = new XmlTextReader(new StringReader(doc));
+            StringReader sr = new StringReader(doc);
+            float num = 0;
+            while(sr.ReadLine() != null){
+                num++;
+            }
+            sr = null;
+            sr = new StringReader(doc);
+            XmlTextReader reader = new XmlTextReader(sr);
+            EditorUtility.DisplayProgressBar("Working", "Parsing XML", 0.0f);
+            float counter = 0;
             while(reader.Read()){
+                counter++;
+                if(counter % 100 == 0){
+                    EditorUtility.DisplayProgressBar("Working", "Parsing XML", reader.LineNumber / num);
+                }
                 switch (reader.NodeType){
                     case XmlNodeType.Element:
                         if(reader.Name == "measure"){
@@ -106,6 +120,7 @@ namespace MusicParser{
                         }
                     break;
                 }
+                EditorUtility.ClearProgressBar();
             }
             return song;
         }

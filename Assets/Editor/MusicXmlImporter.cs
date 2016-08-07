@@ -28,9 +28,19 @@ public class MusicXmlImporter : AssetPostprocessor{
             if(HasExtension(item)){
                 float tempo = 0;
                 string bt = "";
+                StringBuilder builder = new StringBuilder();
+                float fc = 0;
                 StreamReader reader = new StreamReader(item);
-                string data = reader.ReadToEnd();
-                Song score = MusicXmlParser.ParseScore(data);
+                EditorUtility.DisplayProgressBar("working", "loading stream", 0.0f);
+                while(!reader.EndOfStream){
+                    builder.Append(reader.ReadLine());
+                    fc++;
+                    if(fc % 100 == 0){
+                        EditorUtility.DisplayProgressBar("working", "loading stream", reader.BaseStream.Position / (float)reader.BaseStream.Length);
+                    }
+                }
+                EditorUtility.ClearProgressBar();
+                Song score = MusicXmlParser.ParseScore(builder.ToString());
                 foreach (Measure measure in score.Measures){
                     foreach(MeasureElement element in measure.MeasureElements){
                         if(element.Type == MeasureElementType.Note){
