@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-//using MusicParser;
 
 public class GeneratePipes : MonoBehaviour{
     public GameObject pipeBox;
@@ -54,9 +52,7 @@ public class GeneratePipes : MonoBehaviour{
                 string audioPath = string.Format("Instruments/{0}/{1}{2}", instrument, item.Step, item.Octave);
                 audioSource.clip = Resources.Load(audioPath) as AudioClip;
                 if (item.Alter != 0){
-                    print(item.Alter);
                     float adjust = Mathf.Pow(2, (item.Alter / 12.0f));
-                    print(adjust);
                     audioSource.pitch *= adjust;
                 }
             }

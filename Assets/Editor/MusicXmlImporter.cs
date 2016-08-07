@@ -1,10 +1,11 @@
 using System;
-using UnityEditor;
-using MusicParser;
-using System.Text;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections.Generic;
+using System.Text;
+using UnityEditor;
+using MusicParser;
+using System.Linq;
 
 public class MusicXmlImporter : AssetPostprocessor{
     static string extension = ".xml";
@@ -23,9 +24,9 @@ public class MusicXmlImporter : AssetPostprocessor{
     }
 
     public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths){
-        List<Pipe> pipes = new List<Pipe>();
         foreach (string item in importedAssets){
             if(HasExtension(item)){
+                SongData songData = new SongData();
                 float tempo = 0;
                 string bt = "";
                 StringBuilder builder = new StringBuilder();
@@ -41,6 +42,7 @@ public class MusicXmlImporter : AssetPostprocessor{
                 }
                 EditorUtility.ClearProgressBar();
                 Song score = MusicXmlParser.ParseScore(builder.ToString());
+                List<Note> notes = score.Measures.SelectMany(m => m.MeasureElements.Where(n => n.Type == MeasureElementType.Note).Select(i=>i.Element as Note)).ToList();
                 foreach (Measure measure in score.Measures){
                     foreach(MeasureElement element in measure.MeasureElements){
                         if(element.Type == MeasureElementType.Note){
@@ -55,9 +57,9 @@ public class MusicXmlImporter : AssetPostprocessor{
                                     bt = measure.Direction.Type.MetronomeMark.BeatUnit;
                                     tempo = measure.Direction.Type.MetronomeMark.PerMinute;
                                 }
-                                p.BeatType = bt;
-                                p.Tempo = tempo;
-                                pipes.Add(p);
+                                songData.BeatType = bt;
+                                songData.Tempo = tempo;
+                                songData.Pipes.Add(p);
                             }
                         }
                     }
@@ -65,7 +67,7 @@ public class MusicXmlImporter : AssetPostprocessor{
                 
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file = File.Create(GetAssetPath(item));
-                bf.Serialize(file, pipes);
+                bf.Serialize(file, songData);
                 file.Close();
             }
         }

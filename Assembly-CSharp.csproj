@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Pipes\GeneratePipes.cs" />
      <Compile Include="Assets\Scripts\Pipes\MovePipes.cs" />
      <Compile Include="Assets\Scripts\Pipes\Pipe.cs" />
+     <Compile Include="Assets\Scripts\Pipes\SongData.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Scenes.cs" />
      <None Include="Assets\star.xml" />
