@@ -19,7 +19,7 @@ public class GeneratePipes : MonoBehaviour{
 
     double offset = 0;
     float updateInterval = 0.0f;
-    List<Pipe> pipes;
+    SongData data;
 
     // Use this for initialization
     void Start(){
@@ -29,7 +29,7 @@ public class GeneratePipes : MonoBehaviour{
         TextAsset asset = Resources.Load("Songs/" + songName) as TextAsset;
         Stream stream = new MemoryStream(asset.bytes);
         BinaryFormatter bf = new BinaryFormatter();
-        List<Pipe> pipes = (List<Pipe>)bf.Deserialize(stream);
+        data = (SongData)bf.Deserialize(stream);
         // notesUsed = notes.OrderBy(o=>o.Pitch, new PitchComparer()).GroupBy(o=>o.Pitch).Select(o=>o.First()).ToList();
         // Note lowest = notesUsed.First();
         // Note highest = notesUsed.Last();
@@ -37,15 +37,15 @@ public class GeneratePipes : MonoBehaviour{
         // offset = highest.Pitch.getPitchOffset(lowest.Pitch);
         // heightPerNote = (highPosition * 2) / offset;
         new WaitForSeconds(2.0f);
-        StartCoroutine(CreateObstacle(pipes));
+        StartCoroutine(CreateObstacle(data));
     }
 
     void FixedUpdate(){
         updateInterval = Time.deltaTime;
     }
 
-    public IEnumerator CreateObstacle(List<Pipe> pipes){
-        foreach (var item in pipes){
+    public IEnumerator CreateObstacle(SongData data){
+        foreach (var item in data.Pipes){
             if(item != null){
                 GameObject score = Instantiate(pipeBox, Vector3.zero, Quaternion.identity) as GameObject;
                 AudioSource audioSource = score.transform.Find("ScoreBox").GetComponent<AudioSource>();
@@ -56,7 +56,7 @@ public class GeneratePipes : MonoBehaviour{
                     audioSource.pitch *= adjust;
                 }
             }
-            yield return new WaitForSecondsRealtime(SECONDS_IN_MINUTE / item.Tempo);
+            yield return new WaitForSecondsRealtime(SECONDS_IN_MINUTE / data.Tempo);
         }
         //         //use time sig beat type as beat def.
         //         //get bpm from metronome, to calculate time duration of 1 beat

@@ -69,6 +69,7 @@ public class MusicXmlImporter : AssetPostprocessor{
                 FileStream file = File.Create(GetAssetPath(item));
                 bf.Serialize(file, songData);
                 file.Close();
+                AssetDatabase.SaveAssets();
             }
         }
     }
