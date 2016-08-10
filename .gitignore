@@ -6,3 +6,7 @@ Build/*
 *.bytes
 *.csproj
 *.sln
+
+*.mdb
+
+obj/Debug/Assembly-CSharp.dll.mdb

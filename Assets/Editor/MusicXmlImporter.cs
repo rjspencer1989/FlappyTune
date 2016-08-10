@@ -42,26 +42,31 @@ public class MusicXmlImporter : AssetPostprocessor{
                 }
                 EditorUtility.ClearProgressBar();
                 Song score = MusicXmlParser.ParseScore(builder.ToString());
-                List<Note> notes = score.Measures.SelectMany(m => m.MeasureElements.Where(n => n.Type == MeasureElementType.Note).Select(i=>i.Element as Note)).ToList();
+                List<Note> notes = new List<Note>();
                 foreach (Measure measure in score.Measures){
                     foreach(MeasureElement element in measure.MeasureElements){
                         if(element.Type == MeasureElementType.Note){
-                            Note n = element.Element as Note;
-                            if(!n.IsRest){
-                                Pipe p = new Pipe();
-                                p.Step = n.Pitch.Step;
-                                p.Alter = n.Pitch.Alter;
-                                p.Octave = n.Pitch.Octave;
-                                p.Type = n.Type;
-                                if(measure.Direction.Type.MetronomeMark.PerMinute > 0){
+                            notes.Add(element.Element as Note);
+                            if(measure.Direction.Type.MetronomeMark.PerMinute > 0){
                                     bt = measure.Direction.Type.MetronomeMark.BeatUnit;
                                     tempo = measure.Direction.Type.MetronomeMark.PerMinute;
                                 }
                                 songData.BeatType = bt;
                                 songData.Tempo = tempo;
-                                songData.Pipes.Add(p);
-                            }
                         }
+                    }
+                }
+
+                foreach (var note in notes){
+                    if(!note.IsRest){
+                        Pipe p = new Pipe();
+                        p.Step = note.Pitch.Step;
+                        p.Alter = note.Pitch.Alter;
+                        p.Octave = note.Pitch.Octave;
+                        p.Type = note.Type;
+                        songData.Pipes.Add(p);
+                    } else{
+
                     }
                 }
                 
