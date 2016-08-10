@@ -10,3 +10,5 @@ Build/*
 *.mdb
 
 obj/Debug/Assembly-CSharp.dll.mdb
+Assets/UnityMidi/*
+Assets/StreamingAssets/*
