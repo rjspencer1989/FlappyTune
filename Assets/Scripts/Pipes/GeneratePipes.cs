@@ -30,12 +30,7 @@ public class GeneratePipes : MonoBehaviour{
         Stream stream = new MemoryStream(asset.bytes);
         BinaryFormatter bf = new BinaryFormatter();
         data = (SongData)bf.Deserialize(stream);
-        // notesUsed = notes.OrderBy(o=>o.Pitch, new PitchComparer()).GroupBy(o=>o.Pitch).Select(o=>o.First()).ToList();
-        // Note lowest = notesUsed.First();
-        // Note highest = notesUsed.Last();
 
-        // offset = highest.Pitch.getPitchOffset(lowest.Pitch);
-        // heightPerNote = (highPosition * 2) / offset;
         new WaitForSeconds(2.0f);
         StartCoroutine(CreateObstacle(data));
     }
